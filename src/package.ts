@@ -1,1 +1,1 @@
-export { Server, serve } from "https://deno.land/std@0.53.0/http/server.ts";
+export { Server, serve, ServerRequest } from "https://deno.land/std@0.53.0/http/server.ts";
