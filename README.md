@@ -1,4 +1,5 @@
-![test](https://github.com/AhmedAlYousif/meteorite/workflows/test/badge.svg)
+
+[![test](https://github.com/AhmedAlYousif/meteorite/workflows/test/badge.svg)](https://github.com/AhmedAlYousif/meteorite/actions?query=workflow%3Atest)
 
 # Meteorite
 ### A framework to build REST APIs in [Deno](https://deno.land/) runtime.
