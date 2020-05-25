@@ -1,14 +1,14 @@
 ![test](https://github.com/AhmedAlYousif/meteorite/workflows/test/badge.svg)
 
 # Meteorite
-### A framework to build REST APIs in Deno runtime.
+### A framework to build REST APIs in [Deno](https://deno.land/) runtime.
 
 ## Example
 
 `myServer.ts`
 ```typescript
-import { Meteorite } from '.../src/meteorite.ts';
-import { MeteorServer } from '.../src/decorators/decorators.ts';
+import { Meteorite } from 'https://deno.land/x/meteorite@vx.x.x/src/meteorite.ts';
+import { MeteorServer } from 'https://deno.land/x/meteorite@vx.x.x/src/decorators/decorators.ts';
 import { Hello } from './helloController.ts';
 
 @MeteorServer({
@@ -25,8 +25,8 @@ Meteorite.startServer(new MyServer());
 
 `helloController.ts`
 ```typescript
-import { Controller, Request } from ".../src/decorators/decorators.ts";
-import { ServerRequest } from ".../src/package.ts";
+import { Controller, Request } from "https://deno.land/x/meteorite@vx.x.x/src/decorators/decorators.ts";
+import { ServerRequest } from "https://deno.land/x/meteorite@vx.x.x/src/package.ts";
 
 @Controller('')
 export class Hello {
