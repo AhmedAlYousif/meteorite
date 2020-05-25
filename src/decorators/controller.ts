@@ -1,5 +1,5 @@
-import { RouteNode, RequestMethods } from '../../types/routes.ts';
-import { RootNode, TempPaths } from '../../meteorStore.ts'
+import { RouteNode, RequestMethods } from '../types/routes.ts';
+import { RootNode, TempPaths } from '../meteorStore.ts'
 
 export function Controller(path: string) {
     return <T extends { new(...args: any[]): {} }>(constructor: T) => {
@@ -12,7 +12,7 @@ export function Controller(path: string) {
                 doneIndexes.push(i);
             }
         });
-        doneIndexes.forEach((i) => TempPaths.splice(i, 1));
+        doneIndexes.reverse().forEach((i) => TempPaths.splice(i, 1));
         return class extends constructor {
             _meteorPath = path;
         }

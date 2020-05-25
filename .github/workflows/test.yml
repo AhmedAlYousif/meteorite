@@ -16,4 +16,4 @@ jobs:
               with:
                   deno-version: ${{ matrix.deno }}
             - name: Test
-              run: deno test --allow-net -c ./example/tsconfig.json
+              run: deno test --allow-net -c ./tests/tsconfig.json

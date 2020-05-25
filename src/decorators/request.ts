@@ -1,5 +1,5 @@
-import { RequestMethods } from '../../types/routes.ts';
-import { TempPaths } from '../../meteorStore.ts'
+import { RequestMethods } from '../types/routes.ts';
+import { TempPaths } from '../meteorStore.ts'
 
 export function Request(path: string, method:RequestMethods) {
     return function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {

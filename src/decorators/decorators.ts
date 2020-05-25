@@ -1,5 +1,5 @@
 
-export * from './meteorServer/meteorServer.ts';
-export * from './controller/controller.ts';
-export * from './request/request.ts';
+export * from './meteorServer.ts';
+export * from './controller.ts';
+export * from './request.ts';
 
