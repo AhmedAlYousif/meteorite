@@ -1,9 +1,18 @@
-import { RequestMethods } from '../types/routes.ts';
-import { TempPaths } from '../meteorStore.ts'
+import { RequestMethods, Param } from '../types/routes.ts';
+import { TempPaths, TempParams } from '../meteorStore.ts'
 
-export function Request(path: string, method:RequestMethods) {
+export function Request(path: string, method: RequestMethods) {
     return function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
-        TempPaths.push({target:target, key:propertyKey, path:path, function: descriptor.value, method:method});
+        let doneIndexes: number[] = [];
+        let thisParams: Param = {};
+        TempParams.forEach((tempParam, i) => {
+            if (tempParam.target == target, tempParam.key == propertyKey) {
+                thisParams[tempParam.paramName] = {type: tempParam.type, index: tempParam.index, required: tempParam.required}
+                doneIndexes.push(i);
+            }
+        });
+        doneIndexes.reverse().forEach((i) => TempParams.splice(i, 1));
+        TempPaths.push({ target: target, key: propertyKey, path: path, function: descriptor.value, method: method, params:thisParams });
     };
 }
 

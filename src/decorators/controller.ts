@@ -1,4 +1,4 @@
-import { RouteNode, RequestMethods } from '../types/routes.ts';
+import { RouteNode, RequestMethods, Param } from '../types/routes.ts';
 import { RootNode, TempPaths } from '../meteorStore.ts'
 
 export function Controller(path: string) {
@@ -8,7 +8,7 @@ export function Controller(path: string) {
         let doneIndexes: number[] = [];
         TempPaths.forEach((tempPath, i) => {
             if (constructor.prototype.hasOwnProperty(tempPath.key) && constructor.prototype[tempPath.key] == tempPath.function) {
-                saveSegmentsOfPath(tempPath.path, node, { target: tempPath.target, key: tempPath.key, method: tempPath.method });
+                saveSegmentsOfPath(tempPath.path, node, { target: tempPath.target, key: tempPath.key, method: tempPath.method, params:tempPath.params });
                 doneIndexes.push(i);
             }
         });
@@ -19,7 +19,7 @@ export function Controller(path: string) {
     }
 }
 
-function saveSegmentsOfPath(path: string, node: RouteNode, targetInfo?: { target: Object, key: string, method: RequestMethods }) {
+function saveSegmentsOfPath(path: string, node: RouteNode, targetInfo?: { target: Object, key: string, method: RequestMethods, params:Param }) {
     const pathSegments = path.split('/');
     if (path.startsWith('/')) {
         pathSegments.splice(0, 1);
@@ -46,7 +46,7 @@ function saveSegmentsOfPath(path: string, node: RouteNode, targetInfo?: { target
     });
     if (targetInfo != undefined) {
         if (node.methods[targetInfo.method] === undefined) {
-            node.methods[targetInfo.method] = { target: targetInfo.target, propertyKey: targetInfo.key };
+            node.methods[targetInfo.method] = { target: targetInfo.target, propertyKey: targetInfo.key, params: targetInfo.params };
         } else {
             throw `MeteoriteException: can not have use the same route for more than one function for each http request method. [${targetInfo.method}] is used for multiple functions on the same request path`;
         }

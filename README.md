@@ -23,7 +23,7 @@ class MyServer { }
 //start the server
 Meteorite.startServer(new MyServer());
 ```
-
+### Handle request using `ServerRequest`:
 `helloController.ts`
 ```typescript
 import { Controller, Request } from "https://deno.land/x/meteorite@vx.x.x/src/decorators/decorators.ts";
@@ -35,6 +35,28 @@ export class Hello {
     @GetRequest('/hello')
     myReqeust(req: ServerRequest){
         req.respond({body: 'hi'});
+    }
+}
+```
+### Handle request using `@PathParam` or `@QueryParam`:
+`helloController.ts`
+```typescript
+import { Controller, Request } from "https://deno.land/x/meteorite@vx.x.x/src/decorators/decorators.ts";
+import { ServerRequest } from "https://deno.land/x/meteorite@vx.x.x/src/package.ts";
+
+@Controller('')
+export class Hello {
+
+    @GetRequest('/:greeting')
+    greet(
+        @PathParam('greeting') greeting:string,
+        @QueryParam('name', false) name:string
+    ){
+        if(name == null){
+            return `${greeting} there!`;
+        } else {
+            return `${greeting} ${name}!`;
+        }
     }
 }
 ```
@@ -54,6 +76,71 @@ export class Hello {
 Then try the browser `http://localhost:8080/hello`
 
 
+## More on `@Param`, `@PathParam` & `@QueryParam`
+
+### Get all path param or query params
+```typescript
+  method(@Param(type:'PATH') pathParams:any){
+
+  }
+  //or
+  method(@PathParam() pathParams:any){
+    
+  }
+```
+so if you have `/path/:param/:id`
+you will can get the path param values like:
+`pathParam.param` & `pathParam.id`
+
+You can do the same for the query params:
+```typescript
+  method(@Param(type:'QUERY') queryParams:any){
+
+  }
+  //or
+  method(@QueryParam() queryParams:any){
+    
+  }
+```
+
+### Get one param
+```typescript
+  method(@Param({param:{paramName:'id'}, type:'PATH'}) id:string){
+
+  }
+  //or
+  method(@PathParam('id') id:string){
+    
+  }
+
+  //this will throw error. path params can not be not required
+  method(@Param({param:{paramName:'id', required:false}, type:'PATH'}) id:string){
+
+  }
+```
+
+```typescript
+  method(@Param({param:{paramName:'id'}, type:'QUERY'}) id:string){
+
+  }
+  //or
+  method(@QueryParam('id') id:string){
+    
+  }
+
+  //not required
+  method(@Param({param:{paramName:'id', required:false}, type:'QUERY'}) id:string){
+
+  }
+  //or
+  method(@QueryParam('id', false) id:string){
+    
+  }
+```
+
+if the method is using one of those decorators to handle the request it should return the required body where  `body: Uint8Array | Reader | string` or an object of type [`Response`](https://deno.land/std/http/server.ts#L350);
+
+if the handler only return the body, the status code will always be `200` as long as there is no error.
 
 ## TODO
 
@@ -61,9 +148,8 @@ Then try the browser `http://localhost:8080/hello`
 -   [x] `@MeteorServer`
 -   [x] `@Controller`
 -   [x] `@Request` [`@GetRequest`, `@PostRequest`, `@DeleteRequest`, `@PutRequest`]
+-   [x] `@Param` [`@PathParam`, `@QueryParam`]
 -   [ ] `@ServerRequst`
--   [ ] `@PathParam`
--   [ ] `@QueryParam`
 -   [ ] `@Body`
 -   [ ] `@Header`
 -   [ ] `@Accepts`
