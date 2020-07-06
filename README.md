@@ -149,7 +149,7 @@ if the handler only return the body, the status code will always be `200` as lon
 -   [x] `@Controller`
 -   [x] `@Request` [`@GetRequest`, `@PostRequest`, `@DeleteRequest`, `@PutRequest`]
 -   [x] `@Param` [`@PathParam`, `@QueryParam`]
--   [ ] `@ServerRequst`
+-   [ ] `@ServerRequest`
 -   [ ] `@Body`
 -   [ ] `@Header`
 -   [ ] `@Accepts`
