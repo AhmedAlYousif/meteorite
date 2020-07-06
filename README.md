@@ -33,7 +33,7 @@ import { ServerRequest } from "https://deno.land/x/meteorite@vx.x.x/src/package.
 export class Hello {
 
     @GetRequest('/hello')
-    myReqeust(req: ServerRequest){
+    myRequest(req: ServerRequest){
         req.respond({body: 'hi'});
     }
 }
